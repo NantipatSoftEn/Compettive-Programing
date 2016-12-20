@@ -22,7 +22,16 @@ int main()
     int ar[n];
     for(int i=0; i<n; i++) cin>>ar[i];
     sort(ar,ar+n);
+	/*
+		9
+		3 7 8 5 12 14 21 13 18 
+		sort 
+		3 5 7 8 12 13 14 21
+		
+		9/2-1=3 don't forgot start 0 to 3  mean 4
+	*/
     printf("%d\n",median(ar, 0, n / 2 - 1));
+	
     printf("%d\n",median(ar, 0, n - 1));
     if (n % 2 == 0)
         printf("%d\n",median(ar, n / 2, n - 1));

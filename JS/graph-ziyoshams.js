@@ -12,16 +12,7 @@ class Graph {
     }
 
     addEdge(vertex, node) {
-        if (this.AdjList.has(vertex)) {
-            if (this.AdjList.has(node)) {
-                let arr = this.AdjList.get(vertex);
-                !arr.includes(node) ? arr.push(node) : '';
-            } else {
-                throw `Can't add non-existing vertex ->'${node}'`;
-            }
-        } else {
-            throw `You should add '${vertex}' first`;
-        }
+        this.AdjList.get(vertex);
     }
 
     print() {
@@ -111,7 +102,7 @@ function test(arg1, arg2) {
     if (arg1 === arg2) {
         console.log(`${arg1} = ${arg2} \t-> passing`)
     } else {
-        throw 'Not passing';
+         'Not passing';
     }
 }
 let g = new Graph();
@@ -180,3 +171,5 @@ test(g.doesPathExist('A', 'F'), true);
 // test(g.doesPathExist('F', 'D'), false);
 // test(g.doesPathExist('F', 'E'), false);
 // test(g.doesPathExist('F', 'F'), false);
+
+//https://medium.com/@ziyoshams/graphs-in-javascript-cc0ed170b156

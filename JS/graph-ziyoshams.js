@@ -38,7 +38,7 @@ class Graph {
 
         while (q.length) {
             let current = q.pop()
-            console.log(current);
+            console.log(`${current}`);
 
             let arr = this.AdjList.get(current);
 

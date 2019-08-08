@@ -1,7 +1,7 @@
 const input = require('fs').readFileSync('input.txt', 'utf8');
 let lines = input.split('\n');
 class Queue {
-    // Array is used to implement a Queue 
+    // Array is used to implement a Queue
     constructor() {
         this.items = [];
     }
@@ -9,7 +9,8 @@ class Queue {
         this.items.push(element);
     }
     dequeue() {
-        return this.isEmpty() ? "Underflow" : this.items.shift();
+        return this.isEmpty() ?
+            "Underflow" : this.items.shift();
     }
     front() {
         return this.isEmpty() ? "No elements in Queue" : this.items[0];
@@ -22,11 +23,11 @@ class Queue {
     }
 }
 
-
 class Graph {
     constructor(noOfVertices) {
         this.noOfVertices = noOfVertices;
         this.AdjList = new Map();
+        this.path = new Array()
     }
     addVertex(vertex) {
         this.AdjList.set(vertex, []);
@@ -34,14 +35,12 @@ class Graph {
 
     addEdge(vertex1, vertex2) {
         this.AdjList.get(vertex1).push(vertex2);
-        this.AdjList.get(vertex2).push(vertex1);
+        //this.AdjList.get(vertex2).push(vertex1);
     }
     printGraph() {
-        this.AdjList.forEach((value, key) =>
-            console.log(`${key} => ${value}`)
-        );
+        this.AdjList.forEach((value, key) => console.log(`${key} => ${value}`));
     }
-    getAdjList(){
+    getAdjList() {
         return this.AdjList;
     }
     bfs(startingNode) {
@@ -64,17 +63,31 @@ class Graph {
     }
 
     dfs(startingNode) {
-        var visited = new Array(this.noOfVertices).fill(false);
-        this.DFSUtil(startingNode, visited.fill(false));
+        let visited = new Array(this.noOfVertices).fill(false);
+        this.DFSUtil(startingNode, visited);
     }
 
     DFSUtil(vertex, visited) {
         visited[vertex] = true;
-        console.log(vertex);
+        this.path.push(vertex);
         let edge = this.AdjList.get(vertex);
-        edge.forEach(vertex =>
-            !visited[vertex] ? this.DFSUtil(vertex, visited) : ''
-        )
+        edge.forEach(vertex => !visited[vertex] ? this.DFSUtil(vertex, visited) : '')
+    }
+
+    findPathBy() {
+        let visited = new Array(this.noOfVertices).fill(false);
+        this.path.forEach((value, index) => {
+            this.recursive(value, visited, index)
+        });
+    }
+
+    recursive(vertex, visited, index) {
+        let edge = this.AdjList.get(vertex);
+        visited[vertex] = true;
+        edge.forEach((e) => {
+            console.log(`${vertex}-${e} index=${index}`);
+            !visited[vertex] ? this.recursive(e, visited, index) : ''
+        })
     }
 }
 
@@ -90,8 +103,8 @@ for (let index = 1; index <= TotalOfEdge + 1; index++) {
     const vertex = lines[index].split(' ');
     graph.addEdge(parseInt(vertex[0]), parseInt(vertex[1]));
 }
-
-
-//graph.dfs(0)
+graph.dfs(0)
 //graph.printGraph();
-console.table(graph.getAdjList(),graph.dfs(0));
+graph.findPathBy();
+
+//console.table(graph.getPath());

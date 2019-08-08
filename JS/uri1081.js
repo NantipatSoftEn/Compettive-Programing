@@ -34,14 +34,16 @@ class Graph {
 
     addEdge(vertex1, vertex2) {
         this.AdjList.get(vertex1).push(vertex2);
-        //this.AdjList.get(vertex2).push(vertex1);
+        this.AdjList.get(vertex2).push(vertex1);
     }
     printGraph() {
         this.AdjList.forEach((value, key) =>
             console.log(`${key} => ${value}`)
         );
     }
-
+    getAdjList(){
+        return this.AdjList;
+    }
     bfs(startingNode) {
         let visited = new Array(this.noOfVertices).fill(false);
         let q = new Queue();
@@ -89,4 +91,7 @@ for (let index = 1; index <= TotalOfEdge + 1; index++) {
     graph.addEdge(parseInt(vertex[0]), parseInt(vertex[1]));
 }
 
-graph.printGraph();
+
+//graph.dfs(0)
+//graph.printGraph();
+console.table(graph.getAdjList(),graph.dfs(0));

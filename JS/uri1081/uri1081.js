@@ -74,21 +74,7 @@ class Graph {
         edge.forEach(vertex => !visited[vertex] ? this.DFSUtil(vertex, visited) : '')
     }
 
-    findPathBy() {
-        let visited = new Array(this.noOfVertices).fill(false);
-        this.path.forEach((value, index) => {
-            this.recursive(value, visited, index)
-        });
-    }
 
-    recursive(vertex, visited, index) {
-        let edge = this.AdjList.get(vertex);
-        visited[vertex] = true;
-        edge.forEach((e) => {
-            console.log(`${vertex}-${e} index=${index}`);
-            !visited[vertex] ? this.recursive(e, visited, index) : ''
-        })
-    }
 }
 
 //var g = new Graph(6);
@@ -104,7 +90,4 @@ for (let index = 1; index <= TotalOfEdge + 1; index++) {
     graph.addEdge(parseInt(vertex[0]), parseInt(vertex[1]));
 }
 graph.dfs(0)
-//graph.printGraph();
-graph.findPathBy();
-
-//console.table(graph.getPath());
+graph.printGraph();

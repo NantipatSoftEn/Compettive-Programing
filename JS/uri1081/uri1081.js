@@ -1,4 +1,4 @@
-const input = require('fs').readFileSync('input.txt', 'utf8');
+const input = require('fs').readFileSync('uri1081/input.txt', 'utf8');
 let lines = input.split('\n');
 class Queue {
     // Array is used to implement a Queue
@@ -40,6 +40,11 @@ class Graph {
     printGraph() {
         this.AdjList.forEach((value, key) => console.log(`${key} => ${value}`));
     }
+
+    printPath() {
+        this.path.forEach((value, key) => console.log(`${key} => ${value}`));
+    }
+
     getAdjList() {
         return this.AdjList;
     }
@@ -73,8 +78,6 @@ class Graph {
         let edge = this.AdjList.get(vertex);
         edge.forEach(vertex => !visited[vertex] ? this.DFSUtil(vertex, visited) : '')
     }
-
-
 }
 
 //var g = new Graph(6);
@@ -90,4 +93,4 @@ for (let index = 1; index <= TotalOfEdge + 1; index++) {
     graph.addEdge(parseInt(vertex[0]), parseInt(vertex[1]));
 }
 graph.dfs(0)
-graph.printGraph();
+graph.printPath();

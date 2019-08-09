@@ -10,16 +10,21 @@ const a = [
     [],
     [],
     [11],
-    [8]
+    []
 ];
 /*console.log(a[0][0]);
 console.log(a[a[0][0]][0]);
 console.log(a[a[a[0][0]][0]][0]);*/
-
-const R = (v) => {
-    a[v].forEach((value,key) => {
-        console.log(`${v}-${value} `);
-        R(value)
-    }) 
+let visited = new Array(12).fill(false);
+const R = (v, blank = 'bb') => {
+    if (!visited[v]) {
+        visited[v] = true;
+        a[v].forEach((value, key) => {
+            console.log(`${blank}${v}-${value} pathR(G,${value}) `);
+            R(value, blank += 'bb')
+        })
+    }
 }
 R(0);
+console.log();
+visited.forEach((value, index) => !value ? R(index) : '' )

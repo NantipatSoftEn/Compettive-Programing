@@ -25,6 +25,7 @@ class Graph {
     constructor(noOfVertices) {
         this.noOfVertices = noOfVertices;
         this.AdjList = new Map();
+        this.path = new Array();
     }
     addVertex(vertex) {
         this.AdjList.set(vertex, []);
@@ -35,9 +36,11 @@ class Graph {
         this.AdjList.get(vertex2).push(vertex1);
     }
     printGraph() {
-        this.AdjList.forEach((value, key) =>
-            console.log(`${key} => ${value}`)
-        );
+        this.AdjList.forEach((value, key) => console.log(`${key} => ${value}`));
+    }
+
+    printPath() {
+        this.path.forEach((value, key) => console.log(`${key} => ${value}`));
     }
 
     bfs(startingNode) {
@@ -48,7 +51,7 @@ class Graph {
 
         while (!q.isEmpty()) {
             const QueueElement = q.dequeue();
-            console.log(QueueElement);
+            this.path.push(QueueElement);
             let edges = this.AdjList.get(QueueElement);
             edges.forEach(vertex => {
                 if (!visited[vertex]) {
@@ -66,7 +69,7 @@ class Graph {
 
     DFSUtil(vertex, visited) {
         visited[vertex] = true;
-        console.log(vertex);
+        this.path.push(vertex);
         let edge = this.AdjList.get(vertex);
         edge.forEach(vertex =>
             !visited[vertex] ? this.DFSUtil(vertex, visited) : ''

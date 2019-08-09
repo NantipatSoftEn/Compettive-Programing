@@ -10,3 +10,16 @@
 9 => 
 10 => 11
 11 => 8
+
+
+bb0-1 pathR(G,1) 
+bbbb1-5 pathR(G,5) 
+bbbbbb5-6 pathR(G,6) 
+bbbbbb1-7 pathR(G,7) 
+bbbbbbbb7-8 pathR(G,8) 
+bbbb0-4 pathR(G,4) 
+bbbbbb4-2 pathR(G,2) 
+bbbbbbbb2-3 pathR(G,3) 
+
+
+

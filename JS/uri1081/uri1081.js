@@ -1,5 +1,6 @@
-const input = require('fs').readFileSync('uri1081/input.txt', 'utf8');
+const input = require('fs').readFileSync('input.txt', 'utf8');
 let lines = input.split('\n');
+
 class Queue {
     // Array is used to implement a Queue
     constructor() {
@@ -27,7 +28,8 @@ class Graph {
     constructor(noOfVertices) {
         this.noOfVertices = noOfVertices;
         this.AdjList = new Map();
-        this.path = new Array()
+        this.path = new Array();
+        this.visitedDepth;
     }
     addVertex(vertex) {
         this.AdjList.set(vertex, []);
@@ -78,19 +80,42 @@ class Graph {
         let edge = this.AdjList.get(vertex);
         edge.forEach(vertex => !visited[vertex] ? this.DFSUtil(vertex, visited) : '')
     }
+
+    setVisitedDepth(TotalOfVertices){
+        this.visitedDepth = new Array(TotalOfVertices).fill(false);
+    }
+    findDepthDFS(vertex, blank = 'bb') {
+        if (!this.visitedDepth[vertex]) {
+            this.visitedDepth[vertex] = true;
+            let edges = this.AdjList.get(vertex);
+            for (let value of edges) {
+                console.log(`${blank}${vertex}-${value} pathR(G,${value}) `);
+                this.findDepthDFS(value, blank += 'bb')
+            }
+        }
+    }
 }
 
-//var g = new Graph(6);
-const contains = lines[0].split(' ');
+let Number = 0;
+let TestCase = lines[0];
+const contains = lines[1].split(' ');
 
 let TotalOfVertices = parseInt(contains[0]);
-let graph = new Graph(TotalOfVertices);
 const TotalOfEdge = parseInt(contains[1]);
+let graph = new Graph(TotalOfEdge);
 [...Array(TotalOfVertices)].map((_, i) => i).forEach(v => graph.addVertex(v))
 
-for (let index = 1; index <= TotalOfEdge + 1; index++) {
+for (let index = 2; index <= TotalOfEdge +1; index++) {
     const vertex = lines[index].split(' ');
     graph.addEdge(parseInt(vertex[0]), parseInt(vertex[1]));
 }
+
+graph.setVisitedDepth(TotalOfVertices);
 graph.dfs(0)
-graph.printPath();
+graph.findDepthDFS(0);
+graph.visitedDepth.forEach((value, index) => {
+    if(!value){
+        console.log();
+        graph.findDepthDFS(index)
+    }
+})

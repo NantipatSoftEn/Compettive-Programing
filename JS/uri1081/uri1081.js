@@ -81,41 +81,46 @@ class Graph {
         edge.forEach(vertex => !visited[vertex] ? this.DFSUtil(vertex, visited) : '')
     }
 
-    setVisitedDepth(TotalOfVertices){
+    setVisitedDepth(TotalOfVertices) {
         this.visitedDepth = new Array(TotalOfVertices).fill(false);
     }
-    findDepthDFS(vertex, blank = 'bb') {
+    findDepthDFS(vertex, blank = '  ') {
         if (!this.visitedDepth[vertex]) {
             this.visitedDepth[vertex] = true;
             let edges = this.AdjList.get(vertex);
             for (let value of edges) {
                 console.log(`${blank}${vertex}-${value} pathR(G,${value}) `);
-                this.findDepthDFS(value, blank += 'bb')
+                this.findDepthDFS(value, blank += '  ')
             }
         }
     }
 }
 
+
 let Number = 0;
-let TestCase = lines[0];
-const contains = lines[1].split(' ');
-
-let TotalOfVertices = parseInt(contains[0]);
-const TotalOfEdge = parseInt(contains[1]);
-let graph = new Graph(TotalOfEdge);
-[...Array(TotalOfVertices)].map((_, i) => i).forEach(v => graph.addVertex(v))
-
-for (let index = 2; index <= TotalOfEdge +1; index++) {
-    const vertex = lines[index].split(' ');
-    graph.addEdge(parseInt(vertex[0]), parseInt(vertex[1]));
-}
-
-graph.setVisitedDepth(TotalOfVertices);
-graph.dfs(0)
-graph.findDepthDFS(0);
-graph.visitedDepth.forEach((value, index) => {
-    if(!value){
-        console.log();
-        graph.findDepthDFS(index)
+let TestCase = lines[Number++];
+for (let i = 1; i <= TestCase; i++) {
+    console.log(`Caso ${i}:`);
+    const contains = lines[Number].split(' ');
+    let TotalOfVertices = parseInt(contains[0]);
+    const TotalOfEdge = parseInt(contains[1]);
+    let graph = new Graph(TotalOfEdge);
+    [...Array(TotalOfVertices)].map((_, i) => i).forEach(v => graph.addVertex(v))
+    const LineStartEdge = ++Number;
+    for (let index = LineStartEdge; index < TotalOfEdge + LineStartEdge; index++) {
+        const vertex = lines[index].split(' ');
+        graph.addEdge(parseInt(vertex[0]), parseInt(vertex[1]));
+        Number++;
     }
-})
+    graph.setVisitedDepth(TotalOfVertices);
+    graph.dfs(0)
+    graph.findDepthDFS(0);
+    graph.visitedDepth.forEach((value, index) => {
+        if (!value) {
+            console.log();
+            graph.findDepthDFS(index)
+        }
+    })
+    console.log();
+    graph.printGraph();
+}

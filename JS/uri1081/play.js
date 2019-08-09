@@ -14,7 +14,7 @@ const a = [
 ];
 /*console.log(a[0][0]);
 console.log(a[a[0][0]][0]);
-console.log(a[a[a[0][0]][0]][0]);*/
+console.log(a[a[a[0][0]][0]][0]);*/ 
 let visited = new Array(12).fill(false);
 const R = (v, blank = 'bb') => {
     if (!visited[v]) {

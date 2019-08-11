@@ -16,25 +16,28 @@ class Graph {
         this.AdjMetrix[v1][v2] = 1
     }
     dfs(vertex, n, s) {
+        let path = false;
         this.visited[vertex] = true;
-        let sumSpace = '';
         for (let i = 0; i < n; i++) {
             if (this.AdjMetrix[vertex][i] === 1) {
+                path = true;
                 if (!this.visited[i]) {
-             
+
                     console.log(`${s}${vertex}-${i} pathR(G,${i})`);
-                    this.dfs(i, n, s + 'bb');
+                    this.dfs(i, n, s + '  ');
                 } else {
-                  
+
                     console.log(`${s}${vertex}-${i}`);
                 }
             }
         }
+        return  path
     }
     dfs_runner(vertex) {
         let start = 0;
         while (true) {
-            this.dfs(start, vertex, 'bb')
+
+            this.dfs(start, vertex, '  ') ? console.log() : '';
             start = -1
 
             for (let i = 0; i < vertex; i++) {
@@ -50,17 +53,27 @@ class Graph {
 }
 
 let Number = 0
-let contaners = lines[++Number].split(` `);
-let TotalOfVertex = parseInt(contaners[0])
-let TotalOfEdge = parseInt(contaners[1])
-console.log(`${TotalOfVertex} , ${TotalOfEdge}`);
-
-let g = new Graph(TotalOfVertex);
-let start = ++Number
-for (let i = start; i < TotalOfEdge + start; i++) {
-    const vertex = lines[i].split(' ');
-    g.addEdge(parseInt(vertex[0]), parseInt(vertex[1]))
-    Number++;
+let Testcaee = lines[Number++];
+for (let t = 1; t <= Testcaee; t++) {
+    console.log(`Caso ${t}:`);
+    let contaners = lines[Number].split(` `);
+    let TotalOfVertex = parseInt(contaners[0])
+    let TotalOfEdge = parseInt(contaners[1])
+    //console.log(`value${TotalOfVertex},${TotalOfEdge}`);
+    
+    let g = new Graph(TotalOfVertex);
+    const start = ++Number
+   //console.log(`start=${start} toal=${TotalOfEdge + start}`);
+    
+    for (let i = start; i < TotalOfEdge + start; i++) {
+        const vertex = lines[i].split(' ');
+        //console.log(`${vertex}`);
+        
+        g.addEdge(parseInt(vertex[0]), parseInt(vertex[1]))
+        Number++;
+    }
+    //console.log(`Number=${Number}`);
+    
+    
+    g.dfs_runner(TotalOfVertex)
 }
-
-g.dfs_runner(TotalOfVertex)

@@ -91,7 +91,7 @@ class Graph {
             let VertexConnectEdge = '';
             blank += '  ';
             for (let value of edges) {
-                //console.log(`value=${value}, ${this.visitedDepth[value]}`);
+                console.log(`value=${value}, ${this.visitedDepth[value]}`);
                 
                 if (this.visitedDepth[value]) {
                     VertexConnectEdge;
@@ -99,7 +99,7 @@ class Graph {
                     VertexConnectEdge = ` pathR(G,${value})`
                 }
 
-        
+
                 console.log(`${newline}${blank}${vertex}-${value}${VertexConnectEdge}`);
                 this.findDepthDFS(value, blank)
             }

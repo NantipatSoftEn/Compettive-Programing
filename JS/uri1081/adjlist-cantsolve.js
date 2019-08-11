@@ -1,4 +1,4 @@
-const input = require('fs').readFileSync('input.txt', 'utf8');
+const input = require('fs').readFileSync('uri1081/input.txt', 'utf8');
 let lines = input.split('\n');
 
 class Queue {
@@ -84,14 +84,26 @@ class Graph {
     setVisitedDepth(TotalOfVertices) {
         this.visitedDepth = new Array(TotalOfVertices).fill(false);
     }
-    findDepthDFS(vertex, blank = '  ') {
+    findDepthDFS(vertex, blank = '', newline = '') {
         if (!this.visitedDepth[vertex]) {
             this.visitedDepth[vertex] = true;
             let edges = this.AdjList.get(vertex);
+            let VertexConnectEdge = '';
+            blank += '  ';
             for (let value of edges) {
-                console.log(`${blank}${vertex}-${value} pathR(G,${value}) `);
-                this.findDepthDFS(value, blank += '  ')
+                //console.log(`value=${value}, ${this.visitedDepth[value]}`);
+                
+                if (this.visitedDepth[value]) {
+                    VertexConnectEdge;
+                } else {
+                    VertexConnectEdge = ` pathR(G,${value})`
+                }
+
+        
+                console.log(`${newline}${blank}${vertex}-${value}${VertexConnectEdge}`);
+                this.findDepthDFS(value, blank)
             }
+
         }
     }
 }
@@ -115,12 +127,14 @@ for (let i = 1; i <= TestCase; i++) {
     graph.setVisitedDepth(TotalOfVertices);
     graph.dfs(0)
     graph.findDepthDFS(0);
-    graph.visitedDepth.forEach((value, index) => {
+    /*graph.visitedDepth.forEach((value, index) => {
         if (!value) {
-            console.log();
-            graph.findDepthDFS(index)
+            graph.findDepthDFS(index, ``, `\n`)
         }
-    })
+    })*/
     console.log();
-    graph.printGraph();
+    graph.printGraph()
+    console.log('path');
+    
+    graph.printPath();
 }

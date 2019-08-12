@@ -65,9 +65,11 @@ class Graph {
         let path = new Array();
         for (let i = 0; i < this.noOfVertices; i++) {
             if (this.AdjMetrix[vertex1][i] === 1) {
-                if (!this.visited[i]) {
-                    this.visited[i] = true;
+               if (!this.visited[i]) {
+                
+                    //console.log(`${this.getCharBy(vertex1)}=>${this.getCharBy(i)}`);
                     path.push(this.getCharBy(i));
+                    this.dfs(i)
                 }
             }
         }
@@ -108,3 +110,4 @@ for (let i = start; i < TotalOfEdge + start; i++) {
     Number++;
 }
 g.dfs_runner(TotalOfVertex)
+g.printAbjMetrix();

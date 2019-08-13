@@ -29,12 +29,7 @@ class Graph {
         this.AdjMetrix = Array(TotalOfVertex).fill(null).map(() => Array(TotalOfVertex).fill(0));
         this.path = new Array();
         this.visited = new Array(TotalOfVertex).fill(false);
-        this.map = ['a', 'b', 'c', 'd', 'e', 'f',
-            'g', 'h', 'i', 'j', 'k', 'l',
-            'm', 'n', 'o', 'p', 'q', 'r',
-            's', 't', 'u', 'v', 'w',
-            'x', 'y', 'z'
-        ]
+
     }
     getIndexBy(char) {
         return char.charCodeAt(0) - 97;
@@ -50,7 +45,7 @@ class Graph {
 
     addEdge(v1, v2) {
         this.AdjMetrix[v1][v2] = 1
-        //this.AdjMetrix[v2][v1] = 1
+        this.AdjMetrix[v2][v1] = 1
     }
     printAbjMetrix() {
         console.table(this.AdjMetrix);
@@ -61,48 +56,32 @@ class Graph {
     }
 
     dfs(vertex1) {
-        console.log(`vertex1= ${this.getCharBy(vertex1)}`);
         this.path.push(vertex1)
         this.visited[vertex1] = true
-        //let path = new Array();
+    
         for (let i = 0; i < this.noOfVertices; i++) {
             if (!this.visited[i]) {
                 if (this.AdjMetrix[vertex1][i] === 1) {
-                    //this.visited[i] = false
+                  
                     console.log(`AdjMetrix=${this.AdjMetrix[vertex1][i]} vertex1=${this.getCharBy(vertex1)} i=${this.getCharBy(i)}`);
                     console.log(`${this.getCharBy(vertex1)}=>${this.getCharBy(i)}`);
-
                     this.dfs(i)
                 }
             }
         }
-       // return path;
+ 
     }
 
     dfs_runner(TotalOfVertex) {
         let countConnect = 0;
         for (let v = 0; v < TotalOfVertex; v++) {
             if(!this.visited[v]){
-                let result = this.dfs(v)
-                console.log(`${this.getCharBy(v)},${result }`);
                 countConnect++
+                console.log(`countConnect = ${this.getCharBy(v)}`);
+                this.dfs(v)
             }
         }
         console.log(`${countConnect} connected components`);
-        /*let start = 0
-        while (true) {
-            let result = this.dfs(start)
-            console.log(`${this.getCharBy(start)},${result }`);
-            start = -1
-            for (let i = 0; i < TotalOfVertex; i++) {
-                if (!this.visited[i]) {
-                    start = i;
-                    break;
-                }
-            }
-            if (start === -1) break;
-        }*/
-
     }
 }
 
@@ -125,6 +104,7 @@ for (let i = start; i < TotalOfEdge + start; i++) {
     g.addEdge(g.getIndexBy(v1), g.getIndexBy(v2))
     Number++;
 }
+
 g.dfs_runner(TotalOfVertex)
-g.printAbjMetrix();
+//g.printAbjMetrix();
 g.printPath();

@@ -50,7 +50,7 @@ class Graph {
 
     addEdge(v1, v2) {
         this.AdjMetrix[v1][v2] = 1
-        this.AdjMetrix[v2][v1] = 1
+        //this.AdjMetrix[v2][v1] = 1
     }
     printAbjMetrix() {
         console.table(this.AdjMetrix);
@@ -61,14 +61,18 @@ class Graph {
     }
 
     dfs(vertex1) {
-        this.visited[vertex1] = true
+        console.log(`vertex1= ${this.getCharBy(vertex1)}`);
         let path = new Array();
         for (let i = 0; i < this.noOfVertices; i++) {
-            if (this.AdjMetrix[vertex1][i] === 1) {
-               if (!this.visited[i]) {
-                
-                    //console.log(`${this.getCharBy(vertex1)}=>${this.getCharBy(i)}`);
-                    path.push(this.getCharBy(i));
+            if (!this.visited[i]) {
+                this.visited[vertex1] = true
+                if (this.AdjMetrix[vertex1][i] === 1) {
+                    
+                    //path.push(this.getCharBy(i));
+                    //this.visited[i] = false
+                    console.log(`AdjMetrix=${this.AdjMetrix[vertex1][i]} vertex1=${this.getCharBy(vertex1)} i=${this.getCharBy(i)}`);
+                    console.log(`${this.getCharBy(vertex1)}=>${this.getCharBy(i)}`);
+
                     this.dfs(i)
                 }
             }
@@ -77,7 +81,7 @@ class Graph {
     }
 
     dfs_runner(TotalOfVertex) {
-        let countConnect = 0;
+        /*let countConnect = 0;
         for (let v = 0; v < TotalOfVertex; v++) {
             if(!this.visited[v]){
                 let result = this.dfs(v)
@@ -85,8 +89,21 @@ class Graph {
                 countConnect++
             }
         }
-        console.log(`${countConnect} connected components`);
-        
+        console.log(`${countConnect} connected components`);*/
+        let start = 0
+        while (true) {
+            let result = this.dfs(start)
+            console.log(`${this.getCharBy(start)},${result }`);
+            start = -1
+            for (let i = 0; i < TotalOfVertex; i++) {
+                if (!this.visited[i]) {
+                    start = i;
+                    break;
+                }
+            }
+            if (start === -1) break;
+        }
+
     }
 }
 

@@ -1,6 +1,12 @@
 1
-5 4
-a d
+10 10
+a b
 a c
-d b
-c e
+a g
+b c
+c g
+e d
+d f
+h i
+i j
+j h

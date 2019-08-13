@@ -27,7 +27,7 @@ class Graph {
     constructor(noOfVertices) {
         this.noOfVertices = noOfVertices;
         this.AdjMetrix = Array(TotalOfVertex).fill(null).map(() => Array(TotalOfVertex).fill(0));
-        this.path = new Map();
+        this.path = new Array();
         this.visited = new Array(TotalOfVertex).fill(false);
         this.map = ['a', 'b', 'c', 'd', 'e', 'f',
             'g', 'h', 'i', 'j', 'k', 'l',
@@ -62,13 +62,12 @@ class Graph {
 
     dfs(vertex1) {
         console.log(`vertex1= ${this.getCharBy(vertex1)}`);
-        let path = new Array();
+        this.path.push(vertex1)
+        this.visited[vertex1] = true
+        //let path = new Array();
         for (let i = 0; i < this.noOfVertices; i++) {
             if (!this.visited[i]) {
-                this.visited[vertex1] = true
                 if (this.AdjMetrix[vertex1][i] === 1) {
-                    
-                    //path.push(this.getCharBy(i));
                     //this.visited[i] = false
                     console.log(`AdjMetrix=${this.AdjMetrix[vertex1][i]} vertex1=${this.getCharBy(vertex1)} i=${this.getCharBy(i)}`);
                     console.log(`${this.getCharBy(vertex1)}=>${this.getCharBy(i)}`);
@@ -77,11 +76,11 @@ class Graph {
                 }
             }
         }
-        return path;
+       // return path;
     }
 
     dfs_runner(TotalOfVertex) {
-        /*let countConnect = 0;
+        let countConnect = 0;
         for (let v = 0; v < TotalOfVertex; v++) {
             if(!this.visited[v]){
                 let result = this.dfs(v)
@@ -89,8 +88,8 @@ class Graph {
                 countConnect++
             }
         }
-        console.log(`${countConnect} connected components`);*/
-        let start = 0
+        console.log(`${countConnect} connected components`);
+        /*let start = 0
         while (true) {
             let result = this.dfs(start)
             console.log(`${this.getCharBy(start)},${result }`);
@@ -102,7 +101,7 @@ class Graph {
                 }
             }
             if (start === -1) break;
-        }
+        }*/
 
     }
 }
@@ -128,3 +127,4 @@ for (let i = start; i < TotalOfEdge + start; i++) {
 }
 g.dfs_runner(TotalOfVertex)
 g.printAbjMetrix();
+g.printPath();

@@ -29,7 +29,6 @@ class Graph {
         this.AdjMetrix = Array(TotalOfVertex).fill(null).map(() => Array(TotalOfVertex).fill(0));
         this.path = new Array();
         this.visited = new Array(TotalOfVertex).fill(false);
-
     }
     getIndexBy(char) {
         return char.charCodeAt(0) - 97;
@@ -56,29 +55,30 @@ class Graph {
     }
 
     dfs(vertex1) {
+        let connect = new Array();
+        connect.push(this.getCharBy(vertex1));
         this.path.push(vertex1)
         this.visited[vertex1] = true
-    
         for (let i = 0; i < this.noOfVertices; i++) {
             if (!this.visited[i]) {
                 if (this.AdjMetrix[vertex1][i] === 1) {
-                  
+                    connect.push(this.getCharBy(i));
                     console.log(`AdjMetrix=${this.AdjMetrix[vertex1][i]} vertex1=${this.getCharBy(vertex1)} i=${this.getCharBy(i)}`);
                     console.log(`${this.getCharBy(vertex1)}=>${this.getCharBy(i)}`);
                     this.dfs(i)
                 }
             }
         }
- 
+        return connect;
     }
 
     dfs_runner(TotalOfVertex) {
         let countConnect = 0;
         for (let v = 0; v < TotalOfVertex; v++) {
-            if(!this.visited[v]){
+            if (!this.visited[v]) {
                 countConnect++
-                console.log(`countConnect = ${this.getCharBy(v)}`);
-                this.dfs(v)
+                let connect = this.dfs(v);
+                console.log(`${connect},`);
             }
         }
         console.log(`${countConnect} connected components`);
@@ -99,12 +99,7 @@ for (let i = start; i < TotalOfEdge + start; i++) {
     const vertex = lines[i].split(' ');
     let v1 = vertex[0].toString().replace(/\n|\r/g, "")
     let v2 = vertex[1].toString().replace(/\n|\r/g, "")
-
-
     g.addEdge(g.getIndexBy(v1), g.getIndexBy(v2))
     Number++;
 }
-
 g.dfs_runner(TotalOfVertex)
-//g.printAbjMetrix();
-g.printPath();

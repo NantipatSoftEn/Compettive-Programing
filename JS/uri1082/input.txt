@@ -1,6 +1,6 @@
 1
-6 4
-a b
-b c
-c a
-e f
+5 4
+a d
+a c
+d b
+c e

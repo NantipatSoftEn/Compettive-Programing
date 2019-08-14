@@ -10,11 +10,11 @@ class Graph {
     }
     floodFillUtil(screen,  x,  y,  prevValue,  newValue){
         if (x < 0 || x >= M || y < 0 || y >= N) {
-            return 
+            return 0
         }
     
         if(screen[x][y] != prevC){
-            return 
+            return 0
         }
     
         screen[x][y] = newValue; 

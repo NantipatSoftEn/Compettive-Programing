@@ -19,8 +19,8 @@ class Graph {
     printVisited() {
         console.table(this.visited);
     }
-    addVertex(v){
-        this.AbjList.set(v,[])
+    addVertex(v) {
+        this.AbjList.set(v, [])
     }
     addEdge(v1, v2) {
         this.AbjList.get(v1).push(v2)
@@ -34,44 +34,39 @@ class Graph {
         this.path.forEach((value, key) => console.log(`${key} => ${this.getCharBy(value)}`));
     }
 
-    dfs(vertex1) {
-        this.connect.push(this.getCharBy(vertex1));
-        this.path.push(vertex1)
-        this.visited[vertex1] = true
-        let edge = this.AbjList.get(vertex1);
-        edge.forEach((e)=>{
+    dfs(vertex) {
+        this.connect.push(this.getCharBy(vertex))
+        this.visited[vertex] = true;
+        const edge = this.AbjList.get(vertex)
+        edge.forEach(e => {
             if(!this.visited[e]){
-                console.log(`${e}`);
-                
+                this.dfs(e);
             }
         })
     }
 
-    dfs_runner(TotalOfVertex) {
-        let countConnect = 0;
-        for (let v = 0; v < TotalOfVertex; v++) {
-            if (!this.visited[v]) {
-                this.connect = new Array();
-                countConnect++
-                this.dfs(v);
+    startBy(TotalOfVertex){
+        let count = 0;
+        for (let index = 0; index < TotalOfVertex; index++) {
+            this.connect = new Array();
+            if(!this.visited[index]){
+                this.dfs(index)
                 console.log(`${this.connect.sort()},`);
-            }
+                count++;
+            }           
         }
-        console.log(`${countConnect} connected components\n`);
+        console.log(`${count} connected components`);
     }
 }
-
-
-
 let Number = 0
 let Testcaee = lines[Number++];
-for(let t =1;t<=Testcaee;t++){
+for (let t = 1; t <= Testcaee; t++) {
     console.log(`Case #${t}:`);
     let contaners = lines[Number].split(` `);
     let TotalOfVertex = parseInt(contaners[0])
     let TotalOfEdge = parseInt(contaners[1])
     var g = new Graph(TotalOfVertex);
-    g.addVertex()
+    [...Array(g.noOfVertices)].map((_, i) => i).forEach(v => g.addVertex(v))
     const start = ++Number
     for (let i = start; i < TotalOfEdge + start; i++) {
         const vertex = lines[i].split(' ');
@@ -80,5 +75,7 @@ for(let t =1;t<=Testcaee;t++){
         g.addEdge(g.getIndexBy(v1), g.getIndexBy(v2))
         Number++;
     }
-    g.dfs_runner(TotalOfVertex)
+    g.startBy(g.noOfVertices);
+    console.log('');
+    
 }

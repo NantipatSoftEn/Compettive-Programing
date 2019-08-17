@@ -64,22 +64,24 @@ const bfs = (Node1, Node2) => {
 
     }
 };
+    let l = lines.length
+    while(l--){
+        let testcase = lines.shift().split(` `);
+        let start = testcase[0];
+        let end = testcase[1];
+        let charStart = start[0].toString();
+        let numberStart = parseInt(start[1]);
+        let charEnd = end[0].toString();
+        let numberEnd = parseInt(end[1]);
+        
+        //console.log(`${revers(numberStart)},${getIndexBy(charStart)}`);
+        //console.log(`${revers(numberEnd)},${getIndexBy(charEnd)}`);
+        
+        let src = new Node(revers(numberStart), getIndexBy(charStart));
+        let dest = new Node(revers(numberEnd), getIndexBy(charEnd));
+        bfs(src, dest);
+        console.log(`To get from ${start} to ${end} takes ${result} knight moves.`);
+    
+    }
 
 
-for (let i = 0; i < lines.length; i++) {
-    let testcase = lines[i].split(` `);
-    let start = testcase[0];
-    let end = testcase[1];
-    let charStart = start[0].toString();
-    let numberStart = parseInt(start[1]);
-    let charEnd = end[0].toString();
-    let numberEnd = parseInt(end[1]);
-
-    //console.log(`${revers(numberStart)},${getIndexBy(charStart)}`);
-    //console.log(`${revers(numberEnd)},${getIndexBy(charEnd)}`);
-
-    let src = new Node(revers(numberStart), getIndexBy(charStart));
-    let dest = new Node(revers(numberEnd), getIndexBy(charEnd));
-    bfs(src, dest);
-    console.log(`To get from ${start} to ${end} takes ${result} knight moves.`);
-}

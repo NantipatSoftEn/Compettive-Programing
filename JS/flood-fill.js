@@ -1,52 +1,32 @@
 
 class Graph {
-    constructor(maxRow,maxCol, screen){
+    constructor(maxRow,maxCol){
         this.maxRow= maxRow
         this.maxCol= maxCol
-        this.screen = screen
     }
-    floodFill(screen, x, y, newValue){
-        
-    }
-    floodFillUtil(screen,  x,  y,  prevValue,  newValue){
-        if (x < 0 || x >= M || y < 0 || y >= N) {
+    floodFillUtil(board,  x,  y,  prevValue,  newValue){
+        if (x < 0 || x >=  this.maxCol || y < 0 || y >= this.maxRow) {
             return 0
         }
     
-        if(screen[x][y] != prevC){
+        if(screen[x][y] != prevValue){
             return 0
         }
     
-        screen[x][y] = newValue; 
-        floodFillUtil(screen, x+1, y, prevValue, newValue); 
-        floodFillUtil(screen, x-1, y, prevValue, newValue); 
-        floodFillUtil(screen, x, y+1, prevValue, newValue); 
-        floodFillUtil(screen, x, y-1, prevValue, newValue); 
+        board[x][y] = newValue; 
+        this.floodFillUtil(board, x+1, y, prevValue, newValue); 
+        this.floodFillUtil(board, x-1, y, prevValue, newValue); 
+        this.floodFillUtil(board, x, y+1, prevValue, newValue); 
+        this.floodFillUtil(board, x, y-1, prevValue, newValue); 
+    }
+    floodFill(board, x, y, newC) {
+        let  prevValue = screen[x][y]; 
+        this.floodFillUtil(board, x, y, prevValue, newC); 
+        console.log(board);
     }
 }
 
 
-const N=8,M=8
-const  floodFillUtil = (screen,  x,  y,  prevC,  newC) => {
-    if (x < 0 || x >= M || y < 0 || y >= N) {
-        return 
-    }
-
-    if(screen[x][y] != prevC){
-        return 
-    }
-
-    screen[x][y] = newC; 
-    floodFillUtil(screen, x+1, y, prevC, newC); 
-    floodFillUtil(screen, x-1, y, prevC, newC); 
-    floodFillUtil(screen, x, y+1, prevC, newC); 
-    floodFillUtil(screen, x, y-1, prevC, newC); 
-};
-
-const floodFill= (screen, x, y, newC) => {
-    let  prevC = screen[x][y]; 
-    floodFillUtil(screen, x, y, prevC, newC); 
-}
 let screen = [
     [1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 0, 0],
@@ -60,6 +40,6 @@ let screen = [
 console.log(screen);
 console.log('');
 
-let  x = 4, y = 4, newC = 4; 
-floodFill(screen, x, y, newC); 
-console.log(screen);
+let  x = 4, y = 4, newValue = 4; 
+let k= new Graph(8,8);
+k.floodFill(screen,x,y,newValue)

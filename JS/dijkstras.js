@@ -49,15 +49,15 @@ class Graph {
         });
     }
     findPathWithDijkstra(startNode, endNode) {
-        let times = {};
+        let weight = {};
         let backtrace = {};
         let pq = new PriorityQueue();
 
-        times[startNode] = 0;
+        weight[startNode] = 0;
 
         this.nodes.forEach(node => {
             if (node !== startNode) {
-                times[node] = Infinity
+                weight[node] = Infinity
             }
         });
 
@@ -66,39 +66,47 @@ class Graph {
         while (!pq.isEmpty()) {
             let shortestStep = pq.dequeue();
             let currentNode = shortestStep[0];
-            this.adjacencyList[currentNode].forEach(neighbor => {
-                let time = times[currentNode] + neighbor.weight;
-                console.log(`${currentNode},${times[currentNode]},${neighbor.node},${neighbor.weight}`);
+            this.adjacencyList[currentNode].forEach(edge => {
+                let sumWeight = weight[currentNode] + edge.weight;
+                //console.log(`c=${currentNode},node=${edge.node},w=${edge.weight}`);
                 
-                if (time < times[neighbor.node]) {
-                    times[neighbor.node] = time;
-                    backtrace[neighbor.node] = currentNode;
-                    pq.enqueue([neighbor.node, time]);
+                if (sumWeight < weight[edge.node]) {
+                    weight[edge.node] = sumWeight;  //replace weight
+                    backtrace[edge.node] = currentNode;   //  backtrace connection
+                    console.log(`backtrace[${edge.node}] = ${currentNode} , ${  backtrace[edge.node] }`);
+                    
+                    pq.enqueue([edge.node, sumWeight]);
                 }
             });
         }
-        let path = [endNode];
+
+        
+        let path = [endNode];  // for keep  when backtracking
+        //console.log(`path=${path}`);
+        
         let lastStep = endNode;
         while (lastStep !== startNode) {
-            path.unshift(backtrace[lastStep])
+            path.unshift(backtrace[lastStep]) // add value to front 
+            //console.log(`backtrace=${backtrace[lastStep]}`);
             lastStep = backtrace[lastStep]
         }
-        return `Path is ${path} and time is ${times[endNode]}`
+        return `Path is ${path} and time is ${weight[endNode]}`
     }
 }
 
-let map = new Graph();
-map.addNode(0);
-map.addNode(1);
-map.addNode(2);
-map.addNode(3);
-map.addEdge(0, 1, 7)
-map.addEdge(0, 2, 8)
-map.addEdge(2, 3, 9)
+let g = new Graph();
 
 
+g.addNode(0);
+g.addNode(1);
+g.addNode(2);
+g.addNode(3);
+g.addEdge(0, 1, 2)
+g.addEdge(1, 2, 3)
+g.addEdge(0, 2, 3)
+g.addEdge(0, 3, 4)
+g.addEdge(3, 2, 0)
 
+//console.log(g.adjacencyList);
 
-
-
-console.log(map.findPathWithDijkstra(0, 3));
+console.log(g.findPathWithDijkstra(0, 3));

@@ -21,8 +21,7 @@ class PriorityQueue {
     }
 
     dequeue() {
-        let value = this.collection.shift();
-        return value;
+        return this.collection.shift();
     };
     isEmpty() {
         return (this.collection.length === 0)
@@ -69,6 +68,8 @@ class Graph {
             let currentNode = shortestStep[0];
             this.adjacencyList[currentNode].forEach(neighbor => {
                 let time = times[currentNode] + neighbor.weight;
+                console.log(`${currentNode},${times[currentNode]},${neighbor.node},${neighbor.weight}`);
+                
                 if (time < times[neighbor.node]) {
                     times[neighbor.node] = time;
                     backtrace[neighbor.node] = currentNode;
@@ -91,18 +92,13 @@ map.addNode(0);
 map.addNode(1);
 map.addNode(2);
 map.addNode(3);
-map.addNode(4);
-map.addNode(5);
-
-map.addEdge(5,2,1)
-map.addEdge(2,1,10)
-map.addEdge(1,0,1)
-map.addEdge(3,0,2)
-map.addEdge(3,4,2)
-map.addEdge(3,5,3)
-map.addEdge(5,4,2)
+map.addEdge(0, 1, 7)
+map.addEdge(0, 2, 8)
+map.addEdge(2, 3, 9)
 
 
 
-console.log(map.findPathWithDijkstra(0,5));
 
+
+
+console.log(map.findPathWithDijkstra(0, 3));

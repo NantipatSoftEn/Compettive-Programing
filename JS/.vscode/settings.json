@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "iosfwd": "cpp",
+        "fstream": "cpp"
+    },
+    "java.format.settings.url": "eclipse-formatter.xml"
+}

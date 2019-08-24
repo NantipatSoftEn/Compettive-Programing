@@ -1,3 +1,4 @@
+var lines = readline().split('\n');
 class PriorityQueue {
     constructor() {
         this.collection = [];
@@ -69,21 +70,21 @@ class Graph {
             this.adjacencyList[currentNode].forEach(edge => {
                 let sumWeight = weight[currentNode] + edge.weight;
                 //console.log(`c=${currentNode},node=${edge.node},w=${edge.weight}`);
-                
+
                 if (sumWeight < weight[edge.node]) {
-                    weight[edge.node] = sumWeight;  //replace weight
-                    backtrace[edge.node] = currentNode;   //  backtrace connection
+                    weight[edge.node] = sumWeight; //replace weight
+                    backtrace[edge.node] = currentNode; //  backtrace connection
                     console.log(`backtrace[${edge.node}] = ${currentNode} , ${  backtrace[edge.node] }`);
-                    
+
                     pq.enqueue([edge.node, sumWeight]);
                 }
             });
         }
 
-        
-        let path = [endNode];  // for keep  when backtracking
+
+        let path = [endNode]; // for keep  when backtracking
         //console.log(`path=${path}`);
-        
+
         let lastStep = endNode;
         while (lastStep !== startNode) {
             path.unshift(backtrace[lastStep]) // add value to front 
@@ -94,19 +95,21 @@ class Graph {
     }
 }
 
-let g = new Graph();
 
 
-g.addNode(0);
-g.addNode(1);
-g.addNode(2);
-g.addNode(3);
-g.addEdge(0, 1, 2)
-g.addEdge(1, 2, 3)
-g.addEdge(0, 2, 3)
-g.addEdge(0, 3, 4)
-g.addEdge(3, 2, 0)
+while ((num = readline()) != 42) {
+    let g = new Graph();
+    g.addNode(0);
+    g.addNode(1);
+    g.addNode(2);
+    g.addNode(3);
+    g.addEdge(0, 1, 2)
+    g.addEdge(1, 2, 3)
+    g.addEdge(0, 2, 3)
+    g.addEdge(0, 3, 4)
+    g.addEdge(3, 2, 0)
 
-//console.log(g.adjacencyList);
+    //console.log(g.adjacencyList);
 
-console.log(g.findPathWithDijkstra(0, 3));
+    console.log(g.findPathWithDijkstra(0, 3));
+}

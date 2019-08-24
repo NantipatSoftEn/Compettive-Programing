@@ -60,8 +60,8 @@ void dijkstra(int s, vector<int> &d, vector<int> &p)
 
 int main()
 {
+    malloc(10 * sizeof(adj));
     ios_base::sync_with_stdio(false);
-    freopen("input.txt", "r", stdin);
     int v, e, s, t, w, src, dist;
     cin >> v >> e;
     for (int i = 0; i < v; i++)

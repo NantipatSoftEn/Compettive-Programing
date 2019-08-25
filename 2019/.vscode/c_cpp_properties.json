@@ -1,19 +1,26 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "MinGW",
+            "compilerPath": "C:/Users/Steven Upton/scoop/apps/gcc/current/bin/g++.exe",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "C:/Program Files/mingw64/bin/g++.exe",
+            "intelliSenseMode": "clang-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            },
             "cStandard": "c11",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "msvc-x64"
+            "cppStandard": "c++17"
         }
     ],
     "version": 4

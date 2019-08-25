@@ -31,6 +31,8 @@ class Graph {
     constructor() {
         this.nodes = [];
         this.adjacencyList = {};
+        this.weight = {};
+        this.path = {};
     }
 
     addNode(node) {
@@ -49,13 +51,11 @@ class Graph {
         });
     }
     findPathWithDijkstra(startNode, endNode) {
-        let weight = {};
-        let backtrace = {};
         let pq = new PriorityQueue();
-        weight[startNode] = 0;
+        this.weight[startNode] = 0;
         this.nodes.forEach(node => {
             if (node !== startNode) {
-                weight[node] = Infinity
+                this.weight[node] = Infinity
             }
         });
         pq.enqueue([startNode, 0]);
@@ -63,23 +63,24 @@ class Graph {
             let shortestStep = pq.dequeue();
             let currentNode = shortestStep[0];
             this.adjacencyList[currentNode].forEach(edge => {
-                let sumWeight = weight[currentNode] + edge.weight;
-                if (sumWeight < weight[edge.node]) {
-                    weight[edge.node] = sumWeight; //replace weight
-                    backtrace[edge.node] = currentNode; //  backtrace connection
+                let sumWeight = this.weight[currentNode] + edge.weight;
+                if (sumWeight < this.weight[edge.node]) {
+                    this.weight[edge.node] = sumWeight; //replace weight
+                    this.path[edge.node] = currentNode; //  backtrace connection
                     pq.enqueue([edge.node, sumWeight]);
                 }
             });
         }
-        return this.restorePath(startNode,endNode,backtrace)
+        console.log(`W=${this.weight[endNode]}`);
+        return this.restorePath(startNode, endNode, this.path)
     }
 
-    restorePath(start, end, backtrace) {
+    restorePath(start, end, ) {
         let path = [end];
         let lastStep = end;
         while (lastStep !== start) {
-            path.unshift(backtrace[lastStep]) // add value to front 
-            lastStep = backtrace[lastStep]
+            path.unshift(this.path[lastStep]) // add value to front 
+            lastStep = this.path[lastStep]
         }
         return `Path is ${path}`
     }
@@ -88,13 +89,9 @@ let g = new Graph();
 g.addNode(0);
 g.addNode(1);
 g.addNode(2);
-g.addNode(3);
-g.addNode(4);
+g.addEdge(0, 1, 5)
+g.addEdge(1, 2, 10)
+g.addEdge(0, 2, 8)
 
-g.addEdge(0 ,1 ,2)
-g.addEdge(1 ,4 ,5)
-g.addEdge(1 ,2 ,4)
-g.addEdge(0 ,3, 1)
-g.addEdge(3 ,2 ,3)
-g.addEdge(2, 4, 1)
-console.log(g.findPathWithDijkstra(0, 4));
+
+console.log(g.findPathWithDijkstra(0, 2));

@@ -56,8 +56,8 @@ class Graph {
         });
     }
 
-    getWeight(){
-        return this.weight;
+    getWeight(dist){
+        return this.weight[dist];
     }
     calculateWeight(node,pq){
         this.adj[node].forEach(e => {
@@ -80,7 +80,7 @@ class Graph {
             let currentNode = top[0]; // top[1] is weight of node 
             this.calculateWeight(currentNode,pq);
         }
-        return this.restorePath(src, dist, this.path)
+        return this.restorePath(src, dist)
     }
 
     restorePath(src, dist) {
@@ -99,15 +99,12 @@ g.addNode(1);
 g.addNode(2);
 g.addNode(3);
 g.addNode(4);
-g.addNode(5);
-g.addEdge(1, 2, 5)
-g.addEdge(2 ,1 ,10)
-g.addEdge(3 ,4, 8)
-g.addEdge(4 ,3, 7)
-g.addEdge(2 ,3 ,6)
-g.addEdge(3, 4 ,8)
+g.addEdge(0, 1, 2)
+g.addEdge(1, 2, 2)
+g.addEdge(0, 3, 8)
+g.addEdge(2, 3, 1)
 
 
 
-console.log(g.Dks(1, 4));
-console.log(g.getWeight());
+console.log(g.Dks(0, 3));
+console.log(g.getWeight(3));

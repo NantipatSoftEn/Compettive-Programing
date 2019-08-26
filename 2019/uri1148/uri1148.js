@@ -82,16 +82,19 @@ let contaner = lines[n++].split(` `);
 let v = parseInt(contaner[0]);
 let e = parseInt(contaner[1]);
 let g = new Graph(v + 1);
-for (let i = n; i <= e; i++) {
-    //console.log(`i=${i}`);
+let start = n
+console.log(`n=${start}`);
 
-    let value = lines[n++].split(` `);
+for (let i = start; i < e +start; i++) {
+    //console.log(`i=${i}`);
+    let value = lines[i].split(` `);
     let src = parseInt(value[0]);
     let dist = parseInt(value[1]);
     let w = parseInt(value[2]);
-    //console.log(src, dist, w);
+    console.log(src, dist, w);
 
     g.addEdge(src, dist, w);
+    n++;
 }
 let k = lines[n++];
 while (k--) {

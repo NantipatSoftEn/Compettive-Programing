@@ -117,19 +117,7 @@ while (true) {
 
 
 
-/*
-
-Input Sample	Output Sample
-4 5
-1 2 5
-2 1 10
-3 4 8
-4 3 7
-2 3 6
-5
-1 2
-1 3
-1 4
-4 3
-4 1
+/* 
+สรุปคือ  ถ้ามัน connect 2 way ระหว่าง node A และ B   w จะเป็น 0 
+แล้วหาค่า minimum  w ตามปกติ
 */

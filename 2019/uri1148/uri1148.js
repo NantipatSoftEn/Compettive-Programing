@@ -24,10 +24,11 @@ class PriorityQueue {
 
     dequeue() {
         return this.collection.shift();
-    };
+    }
+    
     isEmpty() {
         return (this.collection.length === 0)
-    };
+    }
 }
 
 class Graph {
@@ -48,28 +49,23 @@ class Graph {
     }
 
     dks(src, dist) {
+        let pq = new PriorityQueue();
         let w = new Array(this.total).fill(Infinity);
         let visited = new Array(this.total).fill(false);
         w[src] = 0;
         let nextv;
-        for (let i = 1; i < this.total; i++) {
-            let short_dis = Infinity
-            if (visited[dist]) {
-                break;
-            }
-
-            for (let j = 1; j < this.total; j++) {
-                if (w[j] < short_dis && !visited[j]) {
-                    short_dis = w[j];
-                    nextv = j
+        pq.enqueue([src, 0])
+        while (!pq.isEmpty()) {
+            let top = pq.dequeue();
+            let currentNode = top[0];
+            let currentWeight = top[1];
+            for (let i = 0; i < this.total; i++) {
+                if (currentWeight + this.adj[currentNode][i] < w[i]) {
+                    w[i] = currentWeight + this.adj[currentNode][i];
+                    this.path[i] = currentNode
+                    pq.enqueue([i, w[i]])
                 }
             }
-            if (short_dis == Infinity)
-                break;
-            visited[nextv] = true;
-            for (let j = 1; j < this.total; j++)
-                if (short_dis + this.adj[nextv][j] < w[j])
-                    w[j] = short_dis + this.adj[nextv][j];
         }
         return w[dist];
     }
@@ -82,7 +78,7 @@ while (true) {
     let v = parseInt(contaner[0]);
     let e = parseInt(contaner[1]);
     //console.log(`v=${v},e=${e}`);
-    if(v==0 && e==0) break;
+    if (v == 0 && e == 0) break;
     let g = new Graph(v + 1);
     let start = n
     //console.log(`n=${start}`);
@@ -110,7 +106,7 @@ while (true) {
         } else {
             console.log(`${ result}`);
         }
-        if(k==0) console.log();
+        if (k == 0) console.log();
     }
 }
 

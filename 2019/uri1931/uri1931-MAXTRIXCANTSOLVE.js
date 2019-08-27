@@ -25,7 +25,7 @@ class PriorityQueue {
     dequeue() {
         return this.collection.shift();
     }
-
+    
     isEmpty() {
         return (this.collection.length === 0)
     }
@@ -34,28 +34,17 @@ class PriorityQueue {
 class Graph {
     constructor(TotalOfVertex) {
         this.nodes = [];
-        this.adj = {};
+        this.adj = Array(TotalOfVertex).fill(TotalOfVertex).map(() =>
+            Array(TotalOfVertex).fill(Infinity)
+        );
         this.weight = new Array(TotalOfVertex).fill(Infinity);
         this.path = {};
         this.visited = new Array(TotalOfVertex).fill(false);
         this.total = TotalOfVertex;
-        for (let i = 1;  i <= this.total  ; i++) {
-            this.addNode(i);
-        }
     }
     addEdge(src, dist, w) {
-        this.adj[src].push({
-            n: dist,
-            w: w
-        })
-        this.adj[dist].push({
-            n: src,
-            w: w
-        })
-    }
-
-    addNode(src) {
-        this.adj[src] = []
+        this.adj[src][dist] = w;
+        this.adj[dist][src] = w;
     }
 
     dks(src, dist, adj2) {
@@ -76,7 +65,7 @@ class Graph {
         adj2[currentNode].forEach(element => {
             if (currentWeight + element.w < this.weight[element.n]) {
                 this.weight[element.n] = currentWeight + element.w;
-                pq.enqueue([element.n, this.weight[element.n]]);
+                pq.enqueue([element.n,  this.weight[element.n]]);
             }
         });
     }
@@ -92,13 +81,11 @@ class Graph {
 
 
 }
-let count = 0;
 const dfs = (adj1, adj2, visited, src) => {
     if (!visited[src]) {
         visited[src] = true;
         for (let i = 1; i < adj1[src].length; i++) {
             for (let j = 1; j < adj1[i].length; j++) {
-                count++;
                 adj2[src].push({
                     n: j,
                     w: adj1[src][i] + adj1[i][j]
@@ -116,9 +103,9 @@ let n = 0;
 const contaner = lines[n++].split(` `);
 const v = parseInt(contaner[0]);
 const e = parseInt(contaner[1]);
-let g = new Graph(v + 1);
+let g = new Graph(v+1);
 let adj2 = {}
-for (let i = 1; i < v + 1; i++) {
+for (let i = 1; i < v+1; i++) {
     addNode(adj2, i)
 }
 let visited = new Array(v).fill(false);
@@ -132,10 +119,10 @@ for (let i = n; i <= e; i++) {
 
 dfs(g.adj, adj2, visited, 1)
 
-const result = g.dks(1, v, adj2);
+const  result  = g.dks(1, v,adj2);
 if (result !== Infinity) {
     console.log(result);
 } else {
     console.log(`-1`);
 }
-console.log(`count=${count}`);
+

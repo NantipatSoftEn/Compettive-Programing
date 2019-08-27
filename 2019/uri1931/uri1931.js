@@ -1,6 +1,5 @@
 const input = require('fs').readFileSync('uri1931/input.txt', 'utf8');
 let lines = input.split('\n');
-
 class PriorityQueue {
     constructor() {
         this.collection = [];
@@ -25,10 +24,11 @@ class PriorityQueue {
 
     dequeue() {
         return this.collection.shift();
-    };
+    }
+    
     isEmpty() {
         return (this.collection.length === 0)
-    };
+    }
 }
 
 class Graph {
@@ -41,17 +41,13 @@ class Graph {
         this.path = {};
         this.visited = new Array(TotalOfVertex).fill(false);
         this.total = TotalOfVertex;
-        this.adjList = {};
-        for (let i = 1; i < TotalOfVertex; i++) {
-            this.addNode(i)
-        }
     }
     addEdge(src, dist, w) {
         this.adj[src][dist] = w;
         this.adj[dist][src] = w;
     }
 
-    dks(src, dist) {
+    dks(src, dist, adj2) {
         let pq = new PriorityQueue();
         this.weight[src] = 0;
         pq.enqueue([src, 0])
@@ -61,20 +57,17 @@ class Graph {
             let currentWeight = top[1];
             if (this.weight[currentNode] > currentWeight)
                 continue;
-            this.calculateWeight(currentNode, currentWeight, pq);
+            this.calculateWeight(currentNode, currentWeight, pq, adj2);
         }
         return this.weight[dist];
     }
-    calculateWeight(currentNode, currentWeight, pq) {
-        this.adjList[currentNode].forEach(to => {
-            if (currentWeight + to.w < this.weight[to.n]) {
-                this.weight[to.n] = currentWeight + to.w;
-                pq.enqueue([to.n, this.weight[to.n]]);
+    calculateWeight(currentNode, currentWeight, pq, adj2) {
+        adj2[currentNode].forEach(element => {
+            if (currentWeight + element.w < this.weight[element.n]) {
+                this.weight[element.n] = currentWeight + element.w;
+                pq.enqueue([element.n,  this.weight[element.n]]);
             }
         });
-
-
-
     }
     restorePath(src, dist) {
         let path = [dist];
@@ -85,32 +78,37 @@ class Graph {
         }
         return `Path is ${path}`
     }
-    addNode(node) {
-        this.adjList[node] = []
-    }
 
-    dfs(src) {
-        if (!this.visited[src]) {
-            this.visited[src] = true;
-            for (let i = 0; i < this.adj[src].length; i++) {
-                for (let j = 1; j < this.adj[i].length; j++) {
-                    this.adjList[src].push({
-                        n: j,
-                        w: this.adj[src][i] + this.adj[i][j]
-                    })
-                    this.dfs(j)
-                }
+
+}
+const dfs = (adj1, adj2, visited, src) => {
+    if (!visited[src]) {
+        visited[src] = true;
+        for (let i = 1; i < adj1[src].length; i++) {
+            for (let j = 1; j < adj1[i].length; j++) {
+                adj2[src].push({
+                    n: j,
+                    w: adj1[src][i] + adj1[i][j]
+                })
+                dfs(adj1, adj2, visited, j)
             }
         }
     }
-
 }
 
+const addNode = (adj2, node) => {
+    adj2[node] = []
+}
 let n = 0;
 const contaner = lines[n++].split(` `);
 const v = parseInt(contaner[0]);
 const e = parseInt(contaner[1]);
-let g = new Graph(v + 1);
+let g = new Graph(v+1);
+let adj2 = {}
+for (let i = 1; i < v+1; i++) {
+    addNode(adj2, i)
+}
+let visited = new Array(v).fill(false);
 for (let i = n; i <= e; i++) {
     let value = lines[n++].split(` `);
     let src = parseInt(value[0]);
@@ -118,11 +116,13 @@ for (let i = n; i <= e; i++) {
     let w = parseInt(value[2]);
     g.addEdge(src, dist, w)
 }
-g.dfs(1)
-const  result  = g.dks(1, v);
+
+dfs(g.adj, adj2, visited, 1)
+
+const  result  = g.dks(1, v,adj2);
 if (result !== Infinity) {
     console.log(result);
 } else {
     console.log(`-1`);
-    
 }
+

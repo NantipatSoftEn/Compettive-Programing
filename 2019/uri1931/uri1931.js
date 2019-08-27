@@ -37,9 +37,8 @@ class Graph {
         this.adj = {};
         this.weight = new Array(TotalOfVertex).fill(Infinity);
         this.path = {};
-        this.visited = new Array(TotalOfVertex).fill(false);
         this.total = TotalOfVertex;
-        for (let i = 1;  i <= this.total  ; i++) {
+        for (let i = 0; i < this.total; i++) {
             this.addNode(i);
         }
     }
@@ -92,50 +91,59 @@ class Graph {
 
 
 }
-let count = 0;
 const dfs = (adj1, adj2, visited, src) => {
     if (!visited[src]) {
         visited[src] = true;
-        for (let i = 1; i < adj1[src].length; i++) {
-            for (let j = 1; j < adj1[i].length; j++) {
-                count++;
+        adj1[src].forEach(i => {
+            adj1[i.n].forEach(j => {
                 adj2[src].push({
-                    n: j,
-                    w: adj1[src][i] + adj1[i][j]
+                    n: j.n,
+                    w: i.w + j.w
                 })
-                dfs(adj1, adj2, visited, j)
-            }
-        }
+                dfs(adj1, adj2, visited, j.n)
+            })
+        })
+
     }
 }
-
 const addNode = (adj2, node) => {
     adj2[node] = []
 }
-let n = 0;
-const contaner = lines[n++].split(` `);
-const v = parseInt(contaner[0]);
-const e = parseInt(contaner[1]);
-let g = new Graph(v + 1);
-let adj2 = {}
-for (let i = 1; i < v + 1; i++) {
-    addNode(adj2, i)
-}
-let visited = new Array(v).fill(false);
-for (let i = n; i <= e; i++) {
-    let value = lines[n++].split(` `);
-    let src = parseInt(value[0]);
-    let dist = parseInt(value[1]);
-    let w = parseInt(value[2]);
-    g.addEdge(src, dist, w)
+try {
+    let n = 0;
+    const contaner = lines[n++].split(` `);
+    let v = parseInt(contaner[0]);
+    let e = parseInt(contaner[1]);
+    let g = new Graph(v + 1);
+    let adj2 = {}
+    for (let i = 0; i < v + 1; i++) {
+        addNode(adj2, i)
+    }
+    let visited = new Array(v + 1).fill(false);
+    for (let i = n; i <= e; i++) {
+        let value = lines[n++].split(` `);
+        let src = parseInt(value[0]);
+        let dist = parseInt(value[1]);
+        let w = parseInt(value[2]);
+        g.addEdge(src, dist, w)
+    }
+
+    dfs(g.adj, adj2, visited, 1)
+
+    const result = g.dks(1, v, adj2);
+    if (result !== Infinity) {
+        console.log(result);
+    } else {
+        console.log(`-1`);
+    }
+    console.log(g.adj);
+    console.log(`============`);
+    
+    console.log(adj2);
+} catch (e) {
+    console.log('error'+e);
 }
 
-dfs(g.adj, adj2, visited, 1)
 
-const result = g.dks(1, v, adj2);
-if (result !== Infinity) {
-    console.log(result);
-} else {
-    console.log(`-1`);
-}
-console.log(`count=${count}`);
+
+

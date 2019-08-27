@@ -25,7 +25,7 @@ class PriorityQueue {
     dequeue() {
         return this.collection.shift();
     }
-    
+
     isEmpty() {
         return (this.collection.length === 0)
     }
@@ -65,7 +65,7 @@ class Graph {
         adj2[currentNode].forEach(element => {
             if (currentWeight + element.w < this.weight[element.n]) {
                 this.weight[element.n] = currentWeight + element.w;
-                pq.enqueue([element.n,  this.weight[element.n]]);
+                pq.enqueue([element.n, this.weight[element.n]]);
             }
         });
     }
@@ -99,30 +99,31 @@ const dfs = (adj1, adj2, visited, src) => {
 const addNode = (adj2, node) => {
     adj2[node] = []
 }
-let n = 0;
-const contaner = lines[n++].split(` `);
-const v = parseInt(contaner[0]);
-const e = parseInt(contaner[1]);
-let g = new Graph(v+1);
-let adj2 = {}
-for (let i = 1; i < v+1; i++) {
-    addNode(adj2, i)
-}
-let visited = new Array(v).fill(false);
-for (let i = n; i <= e; i++) {
-    let value = lines[n++].split(` `);
-    let src = parseInt(value[0]);
-    let dist = parseInt(value[1]);
-    let w = parseInt(value[2]);
-    g.addEdge(src, dist, w)
-}
+try {
+    let n = 0;
+    const contaner = lines[n++].split(` `);
+    const v = parseInt(contaner[0]);
+    const e = parseInt(contaner[1]);
+    let g = new Graph(v + 1);
+    let adj2 = {}
+    for (let i = 1; i < v + 1; i++) {
+        addNode(adj2, i)
+    }
+    let visited = new Array(v).fill(false);
+    for (let i = n; i <= e; i++) {
+        let value = lines[n++].split(` `);
+        let src = parseInt(value[0]);
+        let dist = parseInt(value[1]);
+        let w = parseInt(value[2]);
+        g.addEdge(src, dist, w)
+    }
 
-dfs(g.adj, adj2, visited, 1)
+    dfs(g.adj, adj2, visited, 1)
 
-const  result  = g.dks(1, v,adj2);
-if (result !== Infinity) {
-    console.log(result);
-} else {
-    console.log(`-1`);
-}
-
+    const result = g.dks(1, v, adj2);
+    if (result !== Infinity) {
+        console.log(result);
+    } else {
+        console.log(`-1`);
+    }
+} catch (e) {}

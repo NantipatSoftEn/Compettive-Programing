@@ -34,12 +34,9 @@ class PriorityQueue {
 class Graph {
     constructor(TotalOfVertex) {
         this.nodes = [];
-        this.adj = Array(TotalOfVertex).fill(TotalOfVertex).map(() =>
-            Array(TotalOfVertex).fill(Infinity)
-        );
+        this.adj = Array(TotalOfVertex).fill(TotalOfVertex).map(() =>Array(TotalOfVertex).fill(Infinity));
         this.weight = new Array(TotalOfVertex).fill(Infinity);
         this.path = {};
-        this.visited = new Array(TotalOfVertex).fill(false);
         this.total = TotalOfVertex;
     }
     addEdge(src, dist, w) {
@@ -51,9 +48,7 @@ class Graph {
     dks(src, dist) {
         let pq = new PriorityQueue();
         let w = new Array(this.total).fill(Infinity);
-        let visited = new Array(this.total).fill(false);
         w[src] = 0;
-        let nextv;
         pq.enqueue([src, 0])
         while (!pq.isEmpty()) {
             let top = pq.dequeue();
@@ -73,24 +68,17 @@ class Graph {
 
 let n = 0;
 while (true) {
-    //console.log("TSDSDAS")
     let contaner = lines[n++].split(` `);
     let v = parseInt(contaner[0]);
     let e = parseInt(contaner[1]);
-    //console.log(`v=${v},e=${e}`);
     if (v == 0 && e == 0) break;
     let g = new Graph(v + 1);
     let start = n
-    //console.log(`n=${start}`);
-
     for (let i = start; i < e + start; i++) {
-        //console.log(`i=${i}`);
         let value = lines[i].split(` `);
         let src = parseInt(value[0]);
         let dist = parseInt(value[1]);
         let w = parseInt(value[2]);
-        //console.log(src, dist, w);
-
         g.addEdge(src, dist, w);
         n++;
     }
@@ -99,7 +87,6 @@ while (true) {
         let tc = lines[n++].split(` `);
         let src = parseInt(tc[0]);
         let dist = parseInt(tc[1]);
-        //console.log(`src=${src},dist=${dist}`);
         let result = g.dks(src, dist)
         if (result == Infinity) {
             console.log(`Nao e possivel entregar a carta`);

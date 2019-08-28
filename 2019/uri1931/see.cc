@@ -38,6 +38,8 @@ int main()
 {
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
+   freopen("input.txt", "r", stdin);
+     vector<int> path;
   int n, m;
   cin >> n >> m;
   vector<vector<edge>> g(n), g2(n);
@@ -63,18 +65,18 @@ int main()
     q.pop();
     if (d[cur.to] > cur.w)
       continue;
-
     for (auto &v : g2[cur.to])
     {
       int w_extra = cur.w + v.w;
       if (w_extra < d[v.to])
       {
         d[v.to] = w_extra;
+        path.push_back(v.to);
         q.push(edge(v.to, w_extra));
       }
     }
   }
-
+  std::copy(path.begin(), path.end(),std::ostream_iterator<int>(std::cout, " "));
   if (d[n - 1] < inf)
     cout << d[n - 1] << endl;
   else

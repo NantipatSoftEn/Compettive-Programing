@@ -36,7 +36,7 @@ class Graph {
         this.nodes = [];
         this.adj = {};
         this.weight = new Array(TotalOfVertex).fill(Infinity);
-        this.path = {};
+        this.path = new Array();
         this.total = TotalOfVertex;
         for (let i = 0; i < this.total; i++) {
             this.addNode(i);
@@ -64,7 +64,7 @@ class Graph {
         while (!pq.isEmpty()) {
             let top = pq.dequeue();
             let currentNode = top[0];
-            let currentWeight = top[1];
+            let currentWeight = top[1];         
             if (this.weight[currentNode] > currentWeight)
                 continue;
             this.calculateWeight(currentNode, currentWeight, pq, adj2);
@@ -75,6 +75,7 @@ class Graph {
         adj2[currentNode].forEach(element => {
             if (currentWeight + element.w < this.weight[element.n]) {
                 this.weight[element.n] = currentWeight + element.w;
+                this.path.push(element.n);
                 pq.enqueue([element.n, this.weight[element.n]]);
             }
         });
@@ -91,16 +92,23 @@ class Graph {
 
 
 }
-const dfs = (adj1, adj2, visited, src) => {
+const dfs = (at,adj1, adj2, visited, src) => {
+    console.log(`beginStart=${src}`);
     if (!visited[src]) {
+        console.log(`First COME`);
+        
         visited[src] = true;
         adj1[src].forEach(i => {
             adj1[i.n].forEach(j => {
+                console.log(`at start= ${i.n}, to = ${j.n} wstart=${i.w} wto=${j.w}`);
+                
                 adj2[src].push({
                     n: j.n,
                     w: i.w + j.w
                 })
-                dfs(adj1, adj2, visited, j.n)
+                dfs(at,adj1, adj2, visited, j.n)
+                console.log(`=====End point Start ${src}`);
+                
             })
         })
 
@@ -136,6 +144,8 @@ try {
     } else {
         console.log(`-1`);
     }
+    console.log(`Path =${g.path}`);
+    
     console.log(g.adj);
     console.log(`============`);
     
@@ -145,5 +155,6 @@ try {
 }
 
 
-
+/*  เวลาเดินทางต้องเป็นเลยคู่เสมอข้อนี้เวลาเขียนเลยต้องเริ่มจาก 2 node โดยใช้ dfs  เพื่อหา weight รวม
+เสร็จแล้วใช้ dks หาเส้นทางที่ weight น้อยุสุดไปยังปลายทาง */
 

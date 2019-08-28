@@ -74,3 +74,7 @@ for (let t = 1; t <= Testcaee; t++) {
 
     g.dfs_runner(TotalOfVertex)
 }
+
+/**
+ *   backtracking ตามปกติแต่นับความลึกด้วย
+ */

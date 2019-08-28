@@ -1,0 +1,60 @@
+beginStart=1
+First COME
+start= 2, to = 1 wstart=2 wto=2
+beginStart=1
+=====End point Start 1
+start= 2, to = 3 wstart=2 wto=1
+beginStart=3
+First COME
+start= 2, to = 1 wstart=1 wto=2
+beginStart=1
+=====End point Start 3
+start= 2, to = 3 wstart=1 wto=1
+beginStart=3
+=====End point Start 3
+start= 2, to = 4 wstart=1 wto=10
+beginStart=4
+First COME
+start= 2, to = 1 wstart=10 wto=2
+beginStart=1
+=====End point Start 4
+start= 2, to = 3 wstart=10 wto=1
+beginStart=3
+=====End point Start 4
+start= 2, to = 4 wstart=10 wto=10
+beginStart=4
+=====End point Start 4
+start= 3, to = 2 wstart=6 wto=1
+beginStart=2
+First COME
+start= 1, to = 2 wstart=2 wto=2
+beginStart=2
+=====End point Start 2
+start= 3, to = 2 wstart=1 wto=1
+beginStart=2
+=====End point Start 2
+start= 3, to = 4 wstart=1 wto=6
+beginStart=4
+=====End point Start 2
+start= 4, to = 2 wstart=10 wto=10
+beginStart=2
+=====End point Start 2
+start= 4, to = 3 wstart=10 wto=6
+beginStart=3
+=====End point Start 2
+=====End point Start 4
+start= 3, to = 4 wstart=6 wto=6
+beginStart=4
+=====End point Start 4
+=====End point Start 3
+start= 4, to = 2 wstart=6 wto=10
+beginStart=2
+=====End point Start 3
+start= 4, to = 3 wstart=6 wto=6
+beginStart=3
+=====End point Start 3
+=====End point Start 1
+start= 2, to = 4 wstart=2 wto=10
+beginStart=4
+=====End point Start 1
+12

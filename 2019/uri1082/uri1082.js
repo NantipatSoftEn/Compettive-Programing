@@ -79,3 +79,8 @@ for(let t =1;t<=Testcaee;t++){
     }
     g.dfs_runner(TotalOfVertex)
 }
+
+
+/**
+ *   วนลูป backtracking ตามปกติแล้วนับ connnection component เอา
+ */

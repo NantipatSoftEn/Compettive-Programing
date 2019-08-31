@@ -99,6 +99,7 @@ const dfs = (at,adj1, adj2, visited, src) => {
         
         visited[src] = true;
         adj1[src].forEach(i => {
+            console.log(`adj1[${src}]=${i.n} => `);
             adj1[i.n].forEach(j => {
                 console.log(`at start= ${i.n}, to = ${j.n} wstart=${i.w} wto=${j.w}`);
                 
@@ -148,10 +149,10 @@ try {
     
     console.log(g.adj);
     console.log(`============`);
-    
+
     console.log(adj2);
 } catch (e) {
-    console.log('error'+e);
+    console.log('error' + e);
 }
 
 

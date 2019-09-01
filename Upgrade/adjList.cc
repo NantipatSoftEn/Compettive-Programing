@@ -23,7 +23,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    freopen("adjList.input", "r", stdin);
+    freopen("adjList.txt", "r", stdin);
     int n, m;
     cin >> n >> m;
     using pii = pair<int, int>;

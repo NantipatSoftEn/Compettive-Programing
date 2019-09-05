@@ -8,7 +8,6 @@ int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    cout << "gg gyt" << endl;
+    cout << "====" << endl;
     return 0;
-
 }

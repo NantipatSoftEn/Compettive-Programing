@@ -19,14 +19,20 @@ struct edge
 typedef vector<vector<edge>> graph;
 graph adj;
 vector<bool> visited;
-int component = 0;
-void dfs(int v)
+bool dfs(int v, int p)
 {
-    if (visited[v])
-        return;
-    visited[v] = true;
-    for (auto u : adj[v])
-        dfs(u.to);
+    if (!visited[v])
+    {
+        visited[v] = true;
+        for (auto u : adj[v])
+        {
+            if (u.to == p)
+                continue;
+            if (dfs(u.to, v))
+                return true;
+        }
+    }
+    return false;
 }
 
 int main()
@@ -45,16 +51,18 @@ int main()
         cin >> u >> v >> w;
         adj[u].push_back({v, w});
     }
-   // นับว่าต้องเริ่ม dfs ใหม่ทั้งหมดกี่ครั้ง
-    for (int u = 0; u < n; ++u)
+    bool found_cycle = false;
+    for (int u = 1; u <= n; ++u)
     {
         if (!visited[u])
         {
-            ++component;
-            dfs(u); // dfs เพื่อมาร์คทุก node ใน component ว่าเคยเจอแล้ว
+            if (dfs(u))
+            {
+                found_cycle = true;
+                break;
+            }
         }
     }
-    cout << "component=" << component << endl;
     return 0;
 }
 

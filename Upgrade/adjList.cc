@@ -23,10 +23,9 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    freopen("adjList.txt", "r", stdin);
+    freopen("input.txt", "r", stdin);
     int n, m;
     cin >> n >> m;
-    using pii = pair<int, int>;
     vector<vector<edge>> g(n);
 
     for (int i = 0; i < m; i++)

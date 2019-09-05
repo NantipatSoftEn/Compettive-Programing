@@ -28,6 +28,7 @@ void dfs(int v)
     for (auto u : adj[v])
         dfs(u.to);
 }
+
 int main()
 {
     ios_base::sync_with_stdio(false);

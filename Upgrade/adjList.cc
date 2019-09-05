@@ -32,7 +32,8 @@ int main()
     {
         int u, v, w;
         cin >> u >> v >> w;
-        g[i].push_back({v, w});
+        g[u].push_back({v, w});
+        g[v].push_back({u, w});
     }
 
     for (size_t v = 0; v < n; v++)

@@ -32,7 +32,7 @@ for (size_t i = 0; i < 5; i++)
 ### 2d version1
 
 ```c++
-vector<vector<int>> c;
+vector<vector<int>> c;  or vector<int> c[5];
  for (size_t i = 0; i < 5; i++)
     {
         vector<int> row;

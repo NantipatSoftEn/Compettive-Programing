@@ -21,17 +21,24 @@ graph adj;
 vector<bool> visited;
 bool dfs(int v, int p)
 {
-    if (!visited[v])
+    if (visited[v]) // เจอ cycle แล้ว
+        return true;
+    visited[v] = true;
+    
+    for (auto u : adj[v])
     {
-        visited[v] = true;
-        for (auto u : adj[v])
+        if (u.to == p)
         {
-            if (u.to == p)
-                continue;
-            if (dfs(u.to, v))
-                return true;
+            cout << "continue" << endl;
+            continue;
+        }
+        if (dfs(u.to, v))
+        {
+            cout << "found cycle" << endl;
+            return true;
         }
     }
+
     return false;
 }
 
@@ -40,7 +47,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    freopen("input.txt", "r", stdin);
+    freopen("inputcycle.txt", "r", stdin);
     int n, m;
     cin >> n >> m;
     adj.resize(n);
@@ -51,18 +58,20 @@ int main()
         cin >> u >> v >> w;
         adj[u].push_back({v, w});
     }
+
     bool found_cycle = false;
-    for (int u = 1; u <= n; ++u)
+    for (int u = 0; u < n; ++u)
     {
         if (!visited[u])
         {
-            if (dfs(u))
+            if (dfs(u, u))
             {
                 found_cycle = true;
                 break;
             }
         }
     }
+    cout << found_cycle << endl;
     return 0;
 }
 

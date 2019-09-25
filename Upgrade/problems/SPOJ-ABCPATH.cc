@@ -82,7 +82,7 @@ int main()
         {
             for (size_t j = 0; j < m; j++)
             {
-                if (adj[i][j] == 'A' && dist[i][j] == 0)
+                if (adj[i][j] == 1 && dist[i][j] == 0)
                 {
                     floodFill(i, j, 0);
                 }

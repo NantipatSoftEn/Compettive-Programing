@@ -6,28 +6,56 @@ using namespace std;
 
 const long long inf = 1000000000;
 int n, m;
-int adj[100][100];
-vector<int> visited(27, false);
-int start = 1;
-void floodFill(int adj[100][100], int x, int y)
+int adj[51][51];
+int dist[51][51];
+int ax[] = {-1,0,1,1,1,0,-1,-1} , ay[] = {-1,-1,-1,0,1,1,1,0} ;
+bool IsRange(int x, int y)
 {
-    if ((x < n) && (x >= 0) && (y < m) && (y >= 0) && !(visited[adj[x][y]]))
-    {
-        if (adj[x][y] == start)
-        {
-            start++;
-            //cout << adj[x][y] << " ";
-            visited[adj[x][y]] = true;
-            floodFill(adj, x - 1, y - 1);
-            floodFill(adj, x - 1, y);
-            floodFill(adj, x - 1, y + 1);
-            floodFill(adj, x, y - 1);
-            floodFill(adj, x, y + 1);
-            floodFill(adj, x + 1, y - 1);
-            floodFill(adj, x + 1, y);
-            floodFill(adj, x + 1, y + 1);
-        }
-    }
+    return (x < n) && (x >= 0) && (y < m) && (y >= 0);
+}
+void floodFill(int x, int y, int countDist)
+{
+    debug(adj[x][y]);
+    int movex, movey;
+    dist[x][y] = countDist + 1;
+    movex = x - 1;
+    movey = y - 1;
+    if (IsRange(movex, movey) && adj[movex][movex] == adj[x][y] + 1 && dist[movex][movex] < dist[x][y] + 1)
+        floodFill(movex, movey, dist[x][y]);
+    movex = x - 1;
+    movey = y;
+    if (IsRange(movex, movey) && adj[movex][movey] == adj[x][y] + 1 && dist[movex][movey] < dist[x][y] + 1)
+        floodFill(movex, movey, dist[x][y]);
+
+    movex = x - 1;
+    movey = y + 1;
+    if (IsRange(movex, movey) && adj[movex][movey] == adj[x][y] + 1 && dist[movex][movey] < dist[x][y] + 1)
+        floodFill(movex, movey, dist[x][y]);
+
+    movex = x;
+    movey = y - 1;
+    if (IsRange(movex, movey) && adj[movex][movey] == adj[x][y] + 1 && dist[movex][movey] < dist[x][y] + 1)
+        floodFill(movex, movey, dist[x][y]);
+
+    movex = x;
+    movey = y + 1;
+    if (IsRange(movex, movey) && adj[movex][movey] == adj[x][y] + 1 && dist[movex][movey] < dist[x][y] + 1)
+        floodFill(movex, movey, dist[x][y]);
+
+    movex = x + 1;
+    movey = y - 1;
+    if (IsRange(movex, movey) && adj[movex][movey] == adj[x][y] + 1 && dist[movex][movey] < dist[x][y] + 1)
+        floodFill(movex, movey, dist[x][y]);
+
+    movex = x + 1;
+    movey = y;
+    if (IsRange(movex, movey) && adj[movex][movey] == adj[x][y] + 1 && dist[movex][movey] < dist[x][y] + 1)
+        floodFill(movex, movey, dist[x][y]);
+
+    movex = x + 1;
+    movey = y + 1;
+    if (IsRange(movex, movey) && adj[movex][movey] == adj[x][y] + 1 && dist[movex][movey] < dist[x][y] + 1)
+        floodFill(movex, movey, dist[x][y]);
 }
 int main()
 {
@@ -35,13 +63,15 @@ int main()
     cin.tie(NULL);
     freopen("input.txt", "r", stdin);
     int tc = 1;
+    int max;
     while (1)
     {
         cin >> n >> m;
         if (n == 0 && m == 0)
             break;
-        memset(adj, 0, sizeof(adj));    
-        visited.assign(27,false);
+        memset(adj, 0, sizeof(adj));
+        memset(dist, 0, sizeof(dist));
+
         for (size_t i = 0; i < n; i++)
         {
             for (size_t j = 0; j < m; j++)
@@ -51,35 +81,22 @@ int main()
                 adj[i][j] = (int)c - 64;
             }
         }
-        int result = 0;
+        max = dist[0][0];
+        for (size_t i = 0; i < n; i++)
+            for (size_t j = 0; j < m; j++)
+                if (adj[i][j] == 1 && dist[i][j] == 0)
+                    floodFill(i, j, 0);
+
+        printf("Case %d: %d\n", tc, max);
         for (size_t i = 0; i < n; i++)
         {
             for (size_t j = 0; j < m; j++)
             {
-                if (adj[i][j] == 1)
-                {
-                    floodFill(adj, i, j);
-                    //cout << "start" << start - 1 << endl;
-                }
-
-                if (result < start)
-                {
-                    result = start;
-                    start = 1;
-                }
+                if (max < dist[i][j])
+                    max = dist[i][j];
             }
         }
-    
-        printf("Case %d: %d\n",tc,--result);
+        printf("Case %d: %d\n", tc, max);
         tc++;
     }
 }
-
-/*for (size_t i = 0; i < n; i++)
-    {
-        for (size_t j = 0; j < m; j++)
-        {
-            cout << adj[i][j] << " ";
-        }
-        cout << endl;
-    }*/

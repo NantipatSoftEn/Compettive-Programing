@@ -9,6 +9,7 @@
 using namespace std;
 char mat[31][31];
 int n = 30, m = 30;
+string result = "Impossible";
 bool IsRangeX(int x, int y)
 {
     return (x < n && x >= 0);
@@ -24,13 +25,12 @@ bool IsStepOnly(int x, int y)
     return mat[x][y] == '.' || mat[x][y] == 'G';
 }
 
-bool dfs(int i, int j, bool visited[31][31])
+string dfs(int i, int j, bool visited[31][31])
 {
-    printf("mat[%d][%d]=%c\n", i, j, mat[i][j]);
+    //printf("mat[%d][%d]=%c\n", i, j, mat[i][j]);
     if (mat[i][j] == 'G')
     {
-        cout << "possible" << endl;
-        return true;
+        result = "Possible";
     }
 
     int x, y;
@@ -66,8 +66,7 @@ bool dfs(int i, int j, bool visited[31][31])
         visited[x][y] = true;
         dfs(x, y, visited);
     }
-
-    return false;
+    return result;
 }
 
 int main()
@@ -75,20 +74,32 @@ int main()
 
     int tc = 0;
     freopen("input.txt", "r", stdin);
-    bool visited[31][31];
-    memset(visited, false, sizeof(visited));
-    for (int i = 0; i < n; i++)
-        scanf("%s", mat[i]);
-
-    for (int i = 0; i < n; i++)
+    int index = 0;
+    while (scanf("%s", mat[index++]) != EOF)
     {
-        for (int j = 0; j < m; j++)
+        result = "Impossible";
+        if (index == 30)
         {
-            if (mat[i][j] == 'P')
+            /*for (size_t i = 0; i < 30; i++)
             {
+                cout  << mat[i] << endl;
+            }*/
+            
+            index=0;
+            bool visited[31][31];
+            memset(visited, false, sizeof(visited));
 
-                cout << dfs(i, j, visited) << endl;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    if (mat[i][j] == 'P')
+                    {
+                        cout << dfs(i, j, visited) << endl;
+                    }
+                }
             }
+             memset(mat, 0, sizeof(mat));
         }
     }
     return 0;

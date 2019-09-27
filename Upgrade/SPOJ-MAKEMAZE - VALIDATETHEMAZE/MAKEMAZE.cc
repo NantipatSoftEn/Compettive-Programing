@@ -68,6 +68,7 @@ int main()
         }
     }
 
+
     debug(countEntry);
     if (countEntry <= 1 && countEntry > 2)
     {

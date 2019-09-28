@@ -22,7 +22,7 @@ bool IsStepOnly(int x, int y)
     return mat[x][y] == 'v' || mat[x][y] == '.' || mat[x][y] == 'k';
 }
 
-bool isInValid(int i, int j)
+bool isDot(int i, int j)
 {
     return mat[i][j] == '.';
 }
@@ -37,46 +37,59 @@ int main()
     cin.tie(NULL);
 
     freopen("input.txt", "r", stdin);
-    cin >> n >> m;
-
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < m; j++)
-            cin >> mat[i][j];
-
-    int countEntry = 0;
-    for (size_t i = 0; i < n; i++)
+    int tc;
+    cin >> tc;
+    while (tc--)
     {
-        if (isInValid(i, m))
+        cin >> n >> m;
+        memset(mat, 0, sizeof(mat));
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                cin >> mat[i][j];
+        int countEntry = 0;
+        for (size_t i = 0; i < n; i++)
         {
-            countEntry++;
+            if (n > 1 && m > 1)
+            {
+                if (isDot(0, i))
+                    countEntry++;
+                if (isDot(i, 0))
+                    countEntry++;
+                if (isDot(i, m - 1))
+                    countEntry++;
+                if (isDot(n - 1, i))
+                    countEntry++;
+            }
+            else if(n==1 && m==1){
+                countEntry=0;
+            }
+            else
+            {
+                if (isDot(0, i))
+                    countEntry++;
+                if (isDot(i, 0))
+                    countEntry++;
+            }
+        }
+        //debug(countEntry);
+        if (countEntry == 2)
+        {
+            cout << "valid" << endl;
+        }
+        else
+        {
+            cout << "invalid" << endl;
         }
     }
 
-    for (size_t i = 0; i < m; i++)
-    {
-        if (isInValid(n, i))
-        {
-            countEntry++;
-        }
-    }
-
-    for (size_t i = 0; i < m; i++)
-    {
-        if (isInValid(n, i))
-        {
-            countEntry++;
-        }
-    }
-
-
-    debug(countEntry);
-    if (countEntry <= 1 && countEntry > 2)
-    {
-        cout << "invalid" << endl;
-    }
-    else
-    {
-        cout << "valid" << endl;
-    }
     return 0;
 }
+
+/*
+valid
+valid
+invalid
+valid
+invalid
+invalid
+*/

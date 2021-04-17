@@ -60,31 +60,29 @@ void dijkstra(int s, vector<int> &d, vector<int> &p)
 
 int main()
 {
-    // malloc(10 * sizeof(adj));
     ios_base::sync_with_stdio(false);
     freopen("input.txt", "r", stdin);
-    int v, e, s, t, w, src, dist;
+    int v, e, s, t, w;
     cin >> v >> e;
+
     for (int i = 0; i < v; i++)
     {
         vector<pair<int, int>> row;
         adj.push_back(row);
     }
-    for (int i = 0; i < e; i++)
+    for (size_t i = 0; i < e; i++)
     {
         cin >> s >> t >> w;
-        //cout << s << t << w;
         adj[s].push_back(make_pair(t, w));
         adj[t].push_back(make_pair(s, w));
     }
+
     vector<int> d;
     vector<int> p;
-    dijkstra(src, d, p);
+    dijkstra(0, d, p);
 
     vector<int> f;
-    cin >> src >> dist;
-    //cout << src << dist << endl;
-    f = restore_path(src, dist, p);
+    f = restore_path(13, 2, p);
     for (size_t i = 0; i < f.size(); i++)
     {
         cout << f[i] << " ";
